@@ -43,7 +43,7 @@ export default class More extends React.Component{
                                 <Header
                                     containerStyle={{height:60,justifyContent:'center'}}
                                     leftContainerStyle={{bottom:14,left:14}}
-                                    leftComponent={<Icon name='ios-arrow-back' color='#fff' type='ionicon' onPress={()=>{this.setState({modal:false})}}/>}
+                                    leftComponent={<Icon name='back' color='#fff' type='entypo' onPress={()=>{this.setState({modal:false})}}/>}
                                 />
                                 <View style={{padding:15}}>
                                     <Text style={{fontFamily:'robotobold'}}>{this.state.description}</Text>

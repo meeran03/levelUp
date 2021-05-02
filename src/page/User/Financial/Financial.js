@@ -9,6 +9,7 @@ import {
     StyleSheet,
     TouchableOpacity,
     View,
+    I18nManager
 } from 'react-native';
 import {Config} from '../../../Config';
 import {Button, Card, Header, Icon, Text} from 'react-native-elements';
@@ -16,10 +17,11 @@ import SegmentedControlTab from 'react-native-segmented-control-tab';
 import {getFinancial, getUserData, returnData, userData} from '../../../Functions';
 import Input from '../../../component/Input';
 import {showMessage} from 'react-native-flash-message';
-import {Lng} from '../../../Language';
+import {Lng,Lng2} from '../../../Language';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class Financial extends React.Component{
+    lan = I18nManager.isRTL ? Lng : Lng2;
     state = {
         user        : null,
         data        : null,
@@ -61,7 +63,7 @@ export default class Financial extends React.Component{
         console.log(route);
         if(route == 'failed'){
             showMessage({
-                message : Lng.purchase_failed,
+                message : lan.purchase_failed,
                 type    : 'danger'
             })
         }
@@ -72,7 +74,7 @@ export default class Financial extends React.Component{
             await this.setState({user:user});
             await this.setState({spinner:false});
             showMessage({
-                message : Lng.successfully_done,
+                message : lan.successfully_done,
                 type    : 'success'
             })
         }
@@ -85,6 +87,7 @@ export default class Financial extends React.Component{
 
 
     _tabRender = ()=>{
+        let  lan = I18nManager.isRTL ? Lng : Lng2;
         if(this.state.data != null) {
             if (this.state.tabIndex == 0) {
                 return (
@@ -152,18 +155,18 @@ export default class Financial extends React.Component{
                         <ScrollView>
                             <View style={{flex:1, flexDirection:'row'}}>
                                 <Card containerStyle={[Style.box,{backgroundColor:'#E359DB'}]}>
-                                    <Text style={Style.boxText}>{Lng.Payoutable}</Text>
+                                    <Text style={Style.boxText}>{lan.Payoutable}</Text>
                                     <View style={{height:10}}/>
                                     <Text style={Style.boxCount}>{this.state.data.currency}{this.state.data.income}</Text>
                                 </Card>
                                 <Card containerStyle={[Style.box,{backgroundColor:'#33BFFE'}]}>
-                                    <Text style={Style.boxText}>{Lng.Account_charge}</Text>
+                                    <Text style={Style.boxText}>{lan.Account_charge}</Text>
                                     <View style={{height:10}}/>
                                     <Text style={Style.boxCount}>{this.state.data.currency}{this.state.data.credit}</Text>
                                 </Card>
                             </View>
                             <View style={{flex:1,padding:20}}>
-                                <Text style={{fontFamily:'robotobold'}}>{Lng.Payment_gateway}</Text>
+                                <Text style={{fontFamily:'robotobold'}}>{lan.Payment_gateway}</Text>
                                 <Picker
                                     selectedValue={this.state.payGateway}
                                     onValueChange={(val)=>{this.setState({payGateway: val})}}
@@ -193,7 +196,7 @@ export default class Financial extends React.Component{
     _walletPay = () => {
         if(this.state.payPrice == 0 || this.state.payPrice == ''){
             showMessage({
-                message : Lng.empty_field,
+                message : lan.empty_field,
                 type    : "danger"
             });
             return;
@@ -209,13 +212,13 @@ export default class Financial extends React.Component{
                     <Header
                         containerStyle={{height:60,paddingLeft:15,paddingRight:15}}
                         backgroundColor={Config.customColor}
-                        leftComponent={<Icon name='ios-arrow-back' color='#fff' type='ionicon' onPress={()=>{this.props.navigation.goBack();}} />}
+                        leftComponent={<Icon name='back' color='#fff' type='entypo' onPress={()=>{this.props.navigation.goBack();}} />}
                         leftContainerStyle={{bottom:14,left:4}}
-                        centerComponent={{text:Lng.Financial,numberOfLines:1,style:{color:'#fff',fontFamily:'robotobold'}}}
+                        centerComponent={{text:lan.Financial,numberOfLines:1,style:{color:'#fff',fontFamily:'robotobold'}}}
                         centerContainerStyle={{bottom:14}}
                     />
                     <SegmentedControlTab
-                        values={[Lng.Sales, Lng.Balance, Lng.charge_account]}
+                        values={[lan.Sales, lan.Balance, lan.charge_account]}
                         onTabPress={(index)=>{this.setState({tabIndex:index})}}
                         selectedIndex={this.state.tabIndex}
                         firstTabStyle={{borderRadius:0,borderBottomLeftRadius:0}}

@@ -8,7 +8,7 @@ import {
     StyleSheet,
     FlatList,
     TouchableOpacity,
-    AsyncStorage, Modal, Picker, BackHandler, Linking,I18nManager
+    AsyncStorage, Modal, Picker, BackHandler, Linking,I18nManager, Dimensions
 } from 'react-native';
 import {getProduct, returnData, userData} from '../../Functions';
 import Video from 'react-native-video';
@@ -47,6 +47,7 @@ export default class ProductView extends React.PureComponent{
         pause           : true,
         modalQuiz       : false,
         quizId          : null,
+        modalURLPart    : null,
     }
     async componentDidMount(): void {
         BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
@@ -56,7 +57,7 @@ export default class ProductView extends React.PureComponent{
         this.setState({product:data});
         this.setState({total:data.price});
         this.setState({gateway: gateway.gateway});
-
+        console.log("Product Data is ",data['parts'])
         let user = await userData();
         if(user['token'] != undefined){
             this.setState({token:user['token']});
@@ -119,7 +120,7 @@ export default class ProductView extends React.PureComponent{
             }
         }
     }
-    _openPart(item) {
+    async _openPart(item) {
         if(item['free'] == 0 && (this.state.token == null || this.state.product.buy == '0')){
             showMessage({
                 message : 'Please Login Or Purchase Course',
@@ -127,8 +128,31 @@ export default class ProductView extends React.PureComponent{
             })
             return;
         }else{
-            this.setState({video: Config.url + '/api/v' + Config.version + '/product/stream?id=' + item.id + '&token=' + this.state.token});
-            this.setState({modalPart: true});
+            console.log(this.state.video)
+            let vat = Config.url + '/api/v' + Config.version + '/product/stream?id=' + item.id + '&token=' + this.state.token
+            this.setState({video: vat});
+            console.log(vat)
+            let content = await fetch(vat).catch(e => console.log(e));
+            try {
+                content = await content.json();
+            }
+            catch {
+                console.log("This is server video")
+            }
+            console.log(content)
+            if (content.type !== 'yt/vm') {
+                this.setState({video: vat});
+                this.setState({modalPart: true});
+            }
+            else if (content.type === '1') {
+                alert("Sorry! Could not Fetch the Video")
+                return;
+            }
+            else {
+                this.setState({video: content.url});
+                console.log("I am executed")
+                this.setState({modalURLPart: true});
+            }
         }
     }
     async _sendComment(){
@@ -462,11 +486,11 @@ export default class ProductView extends React.PureComponent{
                     <Header
                         containerStyle={{height:60}}
                         backgroundColor={Config.customColor}
-                        leftComponent={<Icon name='ios-arrow-back' color='black' type='ionicon' onPress={()=>{this.props.navigation.goBack();}} />}
+                        leftComponent={<Icon name='back' color='black' type='entypo' onPress={()=>{this.props.navigation.goBack();}} />}
                         leftContainerStyle={{bottom:14,left:14}}
                         centerComponent={{text:this.state.product.title,numberOfLines:1,style:{color:'black',fontFamily:'robotobold'}}}
                         centerContainerStyle={{bottom:13}}
-                        rightComponent={<Icon name='ios-menu' color='black' type='ionicon' onPress={()=>{this.props.navigation.openDrawer()}} />}
+                        rightComponent={<Icon name='menu' color='black'  onPress={()=>{this.props.navigation.openDrawer()}} />}
                         rightContainerStyle={{bottom:14,right:14}}
                     />
                     <ScrollView>
@@ -530,10 +554,10 @@ export default class ProductView extends React.PureComponent{
                         <View style={{flex:1, backgroundColor: Config.background}}>
                             <Header
                                 containerStyle={{height:60}}
-                                backgroundColor={Config.customColor}
-                                leftComponent={<Icon name='ios-arrow-back' color='#fff' type='ionicon' onPress={()=>{this.setState({modalComment:false})}} />}
+                                backgroundColor={Config.primaryColor}
+                                leftComponent={<Icon name='back' color='#fff' type='entypo' onPress={()=>{this.setState({modalComment:false})}} />}
                                 leftContainerStyle={{bottom:10}}
-                                centerComponent={{text:'Write a review',numberOfLines:1,style:{color:'#fff',fontFamily:'robotobold'}}}
+                                centerComponent={{text:'Write a review',numberOfLines:1,style:{color:'black',fontFamily:'robotobold'}}}
                                 centerContainerStyle={{bottom:9}}
                             />
                             <Input onChangeText={(txt)=>{this.setState({commentTxt:txt})}} multiline={true} scrollEnabled={true} containerStyle={{height:'100%',width:'100%',borderWidth:0,flex:1}} inputContainerStyle={{borderBottomWidth:0}} placeholder={'write...'}/>
@@ -551,7 +575,7 @@ export default class ProductView extends React.PureComponent{
                             <Header
                                 containerStyle={{height:60}}
                                 backgroundColor={Config.customColor}
-                                leftComponent={<Icon name='ios-arrow-back' color='#fff' type='ionicon' onPress={()=>{this.setState({modalSupport:false})}} />}
+                                leftComponent={<Icon name='back' color='#fff' type='entypo' onPress={()=>{this.setState({modalSupport:false})}} />}
                                 leftContainerStyle={{bottom:10}}
                                 centerComponent={{text:'Support',numberOfLines:1,style:{color:'#fff',fontFamily:'robotobold'}}}
                                 centerContainerStyle={{bottom:9}}
@@ -644,14 +668,16 @@ export default class ProductView extends React.PureComponent{
                         <Spinner visible={this.state.spinnerBuy}/>
                     </Modal>
                     <Modal onRequestClose={()=>{this.setState({modalPart:false})}} visible={this.state.modalPart}>
-                        <View style={{flex:1}}>
+                        <View style={{flex:1,justifyContent:'center',alignItems : "center"}}>
                             <Video
                                 paused={false}
                                 fullscreenAutorotate={true}
                                 controls={true}
                                 source={{uri: this.state.video}}
                                 posterResizeMode={'cover'}
-                                style={{flex:1,height:240,backgroundColor:'#000'}}
+                                style={{height:Dimensions.get('window').height,backgroundColor:'#000',width:Dimensions.get('window').width,flex:1
+                                        }}
+                                resizeMode={'contain'}
                             />
                         </View>
                     </Modal>
@@ -660,12 +686,25 @@ export default class ProductView extends React.PureComponent{
                             <Header
                                 containerStyle={{height:60}}
                                 backgroundColor={Config.customColor}
-                                leftComponent={<Icon name='ios-arrow-back' color='#fff' type='ionicon' onPress={()=>{this.setState({modalComment:false})}} />}
+                                leftComponent={<Icon name='ios-arrow-back' color='#black' type='ionicon' onPress={()=>{this.setState({modalComment:false})}} />}
                                 leftContainerStyle={{bottom:10}}
-                                centerComponent={{text:'Quiz',numberOfLines:1,style:{color:'#fff',fontFamily:'robotobold'}}}
+                                centerComponent={{text:'Quiz',numberOfLines:1,style:{color:'#black',fontFamily:'robotobold'}}}
                                 centerContainerStyle={{bottom:9}}
                             />
                             <UrlWebView url={Config.url+'/api/v'+ Config.version+'/quiz/'+this.state.quizId+'?token='+this.state.token}/>
+                        </View>
+                    </Modal>
+                    <Modal visible={this.state.modalURLPart} onRequestClose={()=>{this.setState({modalURLPart:false})}}>
+                        <View style={{flex:1,backgroundColor:Config.background}}>
+                            <Header
+                                containerStyle={{height:60}}
+                                backgroundColor={Config.customColor}
+                                leftComponent={<Icon name='ios-arrow-back' color='black' type='ionicon' onPress={()=>{this.setState({modalComment:false})}} />}
+                                leftContainerStyle={{bottom:10}}
+                                centerComponent={{text:'Video',numberOfLines:1,style:{color:'black',fontFamily:'robotobold'}}}
+                                centerContainerStyle={{bottom:9}}
+                            />
+                            <UrlWebView url={this.state.video}/>
                         </View>
                     </Modal>
                 </View>

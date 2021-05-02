@@ -161,7 +161,7 @@ function CustomDrawerContent(props) {
     React.useEffect(()=> {
         setLanguage(I18nManager.isRTL ? 'Arabic' : 'English')
     },[]) 
-
+    let lan = I18nManager.isRTL ? Lng : Lng2;
     return(
         <DrawerContentScrollView {...props}>
             <Text style={{textAlign:'center',fontSize : 17,fontWeight:'bold',paddingVertical:20}}>Settings</Text>
@@ -196,11 +196,11 @@ function CustomDrawerContent(props) {
             inactiveTintColor="#f5e042"
             activeTintColor="#f5e042"
             icon={({ focused, color, size }) => <Icon color={"#f5e042"} size={size} name={'book'} />}            
-            style={{textAlign:I18nManager.isRTL ? 'flex-end' : 'flex-start'}} label="About Us" onPress={() => props.navigation.navigate("Help")} />
+            style={{textAlign:I18nManager.isRTL ? 'flex-end' : 'flex-start'}} label={lan.about} onPress={() => props.navigation.navigate("Help")} />
             <DrawerItem 
             inactiveTintColor='red'
             icon={({ focused, color, size }) => <Icon color={'red'} size={size} name={'phone'} />}        
-            style={{textAlign:I18nManager.isRTL ? 'flex-end' : 'flex-start'}} label="Contact Us" 
+            style={{textAlign:I18nManager.isRTL ? 'flex-end' : 'flex-start'}} label={lan.contact} 
             onPress={() => props.navigation.navigate("Main",{screen : "User",params : {
                         screen : 'TicketList'
             }})} />

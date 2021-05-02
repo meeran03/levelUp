@@ -1,5 +1,5 @@
 import React from 'react';
-import {ActivityIndicator, BackHandler, FlatList, Image, View} from 'react-native';
+import {ActivityIndicator, BackHandler,I18nManager ,FlatList, Image, View} from 'react-native';
 import {Config} from '../../../Config';
 import {Header, Icon} from 'react-native-elements';
 import {getCourses} from '../../../Functions';
@@ -7,7 +7,7 @@ import SegmentedControlTab from 'react-native-segmented-control-tab';
 import Product from '../../../component/Product';
 import MyCourses from '../../../component/MyCourses';
 import MyPurchases from '../../../component/MyPurchases';
-import {Lng} from '../../../Language';
+import {Lng,Lng2} from '../../../Language';
 
 export default class Courses extends React.Component{
     state = {
@@ -15,10 +15,13 @@ export default class Courses extends React.Component{
         tabIndex: 0,
     }
 
+    lan = I18nManager.isRTL ? Lng : Lng2
+
     async componentDidMount(): void {
+        console.log("I am called");
         BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
         let d = await getCourses();
-        let gateway =
+        console.log(d);
         this.setState({data: d});
     }
 
@@ -31,6 +34,7 @@ export default class Courses extends React.Component{
     }
 
     _tabRender = ()=> {
+        let lan = I18nManager.isRTL ? Lng : Lng2
         if (this.state.data != null) {
             if (this.state.tabIndex == 0) {
                 if(this.state.data.courses && this.state.data.courses.length > 0) {
@@ -70,19 +74,20 @@ export default class Courses extends React.Component{
     }
 
     render(){
+        let lan = I18nManager.isRTL ? Lng : Lng2;
         return(
             this.state.data != null?
                 <View style={{flex:1,backgroundColor:Config.background}}>
                     <Header
                         containerStyle={{height:60,paddingLeft:15,paddingRight:15}}
                         backgroundColor={Config.primaryColor}
-                        leftComponent={<Icon name='ios-arrow-back' color='#fff' type='ionicon' onPress={()=>{this.props.navigation.goBack()}} />}
+                        leftComponent={<Icon name='back' color='#fff' type='entypo' onPress={()=>{this.props.navigation.goBack()}} />}
                         leftContainerStyle={{bottom:14, left: 14}}
-                        centerComponent={{text:Lng.Courses,numberOfLines:1,style:{color:'#fff',fontFamily:'robotobold'}}}
+                        centerComponent={{text:lan.Courses,numberOfLines:1,style:{color:'#fff',fontFamily:'robotobold'}}}
                         centerContainerStyle={{bottom:13}}
                     />
                     <SegmentedControlTab
-                        values={[Lng.My_courses, Lng.My_purchases]}
+                        values={[lan.My_courses, lan.My_purchases]}
                         onTabPress={(index)=>{this.setState({tabIndex:index})}}
                         selectedIndex={this.state.tabIndex}
                         firstTabStyle={{borderRadius:0,borderBottomLeftRadius:0}}

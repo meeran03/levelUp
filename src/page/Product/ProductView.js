@@ -280,7 +280,7 @@ export default class ProductView extends React.PureComponent{
                             <Header
                                 containerStyle={{height:60}}
                                 backgroundColor={Config.customColor}
-                                leftComponent={<Icon name='ios-arrow-back' color='#fff' type='ionicon' onPress={()=>{this.setState({modalComment:false})}} />}
+                                leftComponent={<Icon name='back' color='#fff' type='entypo' onPress={()=>{this.setState({modalComment:false})}} />}
                                 leftContainerStyle={{bottom:10}}
                                 centerComponent={{text:lan.write_a_review,numberOfLines:1,style:{color:'#fff',fontFamily:'robotobold'}}}
                                 centerContainerStyle={{bottom:9}}
@@ -300,7 +300,7 @@ export default class ProductView extends React.PureComponent{
                             <Header
                                 containerStyle={{height:60}}
                                 backgroundColor={Config.primaryColor}
-                                leftComponent={<Icon name='ios-arrow-back' color='#fff' type='ionicon' onPress={()=>{this.setState({modalSupport:false})}} />}
+                                leftComponent={<Icon name='back' color='#fff' type='entypo' onPress={()=>{this.setState({modalSupport:false})}} />}
                                 leftContainerStyle={{bottom:10}}
                                 centerComponent={{text:lan.support,numberOfLines:1,style:{color:'#fff',fontFamily:'robotobold'}}}
                                 centerContainerStyle={{bottom:9}}
@@ -320,7 +320,7 @@ export default class ProductView extends React.PureComponent{
                             <Header
                                 containerStyle={{height:60}}
                                 backgroundColor={Config.primaryColor}
-                                leftComponent={<Icon name='ios-arrow-back' color='#fff' type='ionicon' onPress={()=>{this.setState({modalBuy:false})}} />}
+                                leftComponent={<Icon name='back' color='#fff' type='entypo' onPress={()=>{this.setState({modalBuy:false})}} />}
                                 leftContainerStyle={{bottom:10}}
                                 centerComponent={{text:lan.enroll_on_the_course,numberOfLines:1,style:{color:'#fff',fontFamily:'robotobold'}}}
                                 centerContainerStyle={{bottom:9}}

@@ -1,6 +1,8 @@
 import React from 'react';
-import {View, ActivityIndicator, StyleSheet, Image, AsyncStorage} from 'react-native';
+import {View, ActivityIndicator, StyleSheet, Image, AsyncStorage,I18nManager} from 'react-native';
 import {getData, returnData} from '../Functions';
+import RNRestart from 'react-native-restart'; // Import package from node modules
+
 
 export default class Splash extends React.Component{
 
@@ -12,6 +14,11 @@ export default class Splash extends React.Component{
                 if(help == '1') {
                     this.props.navigation.navigate('Route');
                 }else{
+                    if (!I18nManager.isRTL) {
+                        I18nManager.allowRTL(true)
+                        I18nManager.forceRTL(true)
+                        RNRestart.Restart();
+                    }
                     this.props.navigation.navigate('Help');
                 }
             });

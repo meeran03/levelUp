@@ -9,7 +9,7 @@ export default class MyCourses extends React.Component{
         return (
             <TouchableOpacity activeOpacity={1} onPress={()=>{this.props.navigation.navigate('Product',{id:this.props.item.id})}}>
                 <Card containerStyle={Style.container}>
-                    <FastImage style={Style.image} source={{uri:this.props.item.thumbnail}}/>
+                    <FastImage style={Style.image} source={{uri:this.props.item.thumbnail ? this.props.item.thumbnail: 'https://cdn4.vectorstock.com/i/1000x1000/58/48/blank-photo-icon-vector-3265848.jpg'}}/>
                     <View style={Style.text}>
                         <Text numberOfLines={1} style={{fontFamily:'robotobold',fontSize:17,color:Config.sectionsColor}}>{this.props.item.title}</Text>
                         <Text style={{color:Config.greenColor,marginTop:10,fontSize:17,fontFamily:'robotobold'}}>{this.props.item.mode}</Text>

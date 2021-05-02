@@ -1,18 +1,18 @@
 import React from 'react';
-import {ActivityIndicator, BackHandler, FlatList, Image, View} from 'react-native';
+import {ActivityIndicator, BackHandler, FlatList,I18nManager ,Image, View} from 'react-native';
 import {Config} from '../../../Config';
 import {Header, Icon} from 'react-native-elements';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 import {getChannel, getCourses} from '../../../Functions';
 import ChannelBox from '../../../component/ChannelBox';
-import {Lng} from '../../../Language';
+import {Lng,Lng2} from '../../../Language';
 
 export default class Channel extends React.Component{
 
     state = {
         data : null
     }
-
+    lan = I18nManager.isRTL ? Lng : Lng2;
     async componentDidMount(): void {
         BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
         let d = await getChannel();
@@ -28,15 +28,17 @@ export default class Channel extends React.Component{
     }
 
     render(){
+        let lan = I18nManager.isRTL ? Lng : Lng2
+
         return(
             this.state.data != null?
                 <View style={{flex:1,backgroundColor:Config.background}}>
                     <Header
                         containerStyle={{height:60,paddingLeft:15,paddingRight:15}}
                         backgroundColor={Config.primaryColor}
-                        leftComponent={<Icon name='ios-arrow-back' color='#fff' type='ionicon' onPress={()=>{this.props.navigation.goBack()}} />}
+                        leftComponent={<Icon name='back' color='#fff' type='entypo' onPress={()=>{this.props.navigation.goBack()}} />}
                         leftContainerStyle={{bottom:14, left:14}}
-                        centerComponent={{text:Lng.Channel,numberOfLines:1,style:{color:'#fff',fontFamily:'robotobold'}}}
+                        centerComponent={{text:lan.Channel,numberOfLines:1,style:{color:'#fff',fontFamily:'robotobold'}}}
                         centerContainerStyle={{bottom:13}}
                     />
                     <View style={{height:10}}/>

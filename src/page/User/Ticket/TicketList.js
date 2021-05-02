@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput,StyleSheet, View, ActivityIndicator, FlatList, TouchableOpacity, Modal, BackHandler, Image, ScrollView} from 'react-native';
+import {TextInput,StyleSheet, View, ActivityIndicator,I18nManager, FlatList, TouchableOpacity, Modal, BackHandler, Image, ScrollView} from 'react-native';
 import {Config} from '../../../Config';
 import {Button, Card, Header, Icon, Input, Text} from 'react-native-elements';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
@@ -7,7 +7,7 @@ import {getSupport, userData} from '../../../Functions';
 import DocumentPicker from "react-native-document-picker";
 import FlashMessage from 'react-native-flash-message';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {Lng} from '../../../Language';
+import {Lng,Lng2} from '../../../Language';
 
 export default class TicketList extends React.Component{
     state={
@@ -32,6 +32,8 @@ export default class TicketList extends React.Component{
     constructor(props){
         super(props);
     }
+
+    lan = I18nManager.isRTL ? Lng : Lng2
 
     async componentDidMount(): void {
         BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
@@ -78,11 +80,11 @@ export default class TicketList extends React.Component{
     async sendData(){
 
         if(this.state.ticketTitle == null || this.state.ticketTitle == ''){
-            this.refs.modalFlash.showMessage(Lng.empty_field);
+            this.refs.modalFlash.showMessage(lan.empty_field);
             return;
         }
         if(this.state.ticketTxt == null || this.state.ticketTxt == ''){
-            this.refs.modalFlash.showMessage(Lng.empty_field);
+            this.refs.modalFlash.showMessage(lan.empty_field);
             return;
         }
         this.setState({spinner:true});
@@ -127,6 +129,7 @@ export default class TicketList extends React.Component{
     }
 
     _tabRender = ()=>{
+        let lan = I18nManager.isRTL ? Lng : Lng2
         if(this.state.data != null) {
             if (this.state.tabIndex == 0) {
                 if(this.state.data.tickets && this.state.data.tickets.length > 0) {
@@ -278,6 +281,7 @@ export default class TicketList extends React.Component{
     }
 
     render(){
+        let lan = I18nManager.isRTL ? Lng : Lng2
 
         return(
             this.state.data != null?
@@ -285,15 +289,15 @@ export default class TicketList extends React.Component{
                     <Header
                         containerStyle={{height:60,paddingLeft:15,paddingRight:15}}
                         backgroundColor={Config.primaryColor}
-                        leftComponent={<Icon name='ios-arrow-back' color='#fff' type='ionicon' onPress={()=>{this.props.navigation.goBack();}} />}
+                        leftComponent={<Icon name='back' color='#fff' type='entypo' onPress={()=>{this.props.navigation.goBack();}} />}
                         leftContainerStyle={{bottom:14, left:6}}
                         rightComponent={<Icon name='plus' color='#fff' type='feather' onPress={()=>{this.setState({new:true})}} />}
                         rightContainerStyle={{bottom:14, right:6}}
-                        centerComponent={{text:Lng.support,numberOfLines:1,style:{color:'#fff',fontFamily:'robotobold'}}}
+                        centerComponent={{text:lan.support,numberOfLines:1,style:{color:'#fff',fontFamily:'robotobold'}}}
                         centerContainerStyle={{bottom:13}}
                     />
                     <SegmentedControlTab
-                        values={[Lng.support, Lng.comments, Lng.Students]}
+                        values={[lan.support, lan.comments, lan.Students]}
                         onTabPress={(index)=>{this.setState({tabIndex:index})}}
                         selectedIndex={this.state.tabIndex}
                         firstTabStyle={{borderRadius:0,borderBottomLeftRadius:0}}
@@ -311,14 +315,14 @@ export default class TicketList extends React.Component{
                             <Header
                                 containerStyle={{height:60,paddingLeft:15,paddingRight:15}}
                                 backgroundColor={Config.primaryColor}
-                                leftComponent={<Icon name='ios-arrow-back' color='#fff' type='ionicon' onPress={()=>{this.setState({new:false});}} />}
+                                leftComponent={<Icon name='back' color='#fff' type='entypo' onPress={()=>{this.setState({new:false});}} />}
                                 leftContainerStyle={{bottom:14,left:6}}
-                                centerComponent={{text:Lng.new_ticket,numberOfLines:1,style:{color:'#fff',fontFamily:'robotobold'}}}
+                                centerComponent={{text:lan.new_ticket,numberOfLines:1,style:{color:'#fff',fontFamily:'robotobold'}}}
                                 centerContainerStyle={{bottom:13}}
                             />
                             <Input onChangeText={(txt)=>{this.setState({ticketTitle:txt})}} value={this.state.ticketTitle} placeholder={'Title...'}/>
                             <View style={{height:5}}/>
-                            <Input onChangeText={(txt)=>{this.setState({ticketTxt:txt})}} multiline={true} scrollEnabled={true} containerStyle={{height:'100%',width:'100%',borderWidth:0,flex:1}} inputContainerStyle={{borderBottomWidth:0}} placeholder={Lng.write_message}/>
+                            <Input onChangeText={(txt)=>{this.setState({ticketTxt:txt})}} multiline={true} scrollEnabled={true} containerStyle={{height:'100%',width:'100%',borderWidth:0,flex:1}} inputContainerStyle={{borderBottomWidth:0}} placeholder={lan.write_message}/>
                             {(this.state.ticketFile != null && this.state.ticketFile.name != undefined)?
                                 <View style={{elevation:4,flex:1, flexDirection:'row',position:'absolute',width:'100%',height:40,bottom:60,left:0,backgroundColor:'orange'}}>
                                     <View style={{width:'80%',paddingLeft:15,paddingRight:5,paddingTop:10}}>
@@ -331,10 +335,10 @@ export default class TicketList extends React.Component{
                                 :null}
                             <View style={{elevation:4,flex:1, flexDirection:'row',position:'absolute',width:'100%',height:60,bottom:0,left:0,backgroundColor:'#fff'}}>
                                 <View style={{width:'60%',paddingLeft:15,paddingRight:5,paddingTop:10}}>
-                                    <Button onPress={()=>{this.sendData()}} title={Lng.Send} buttonStyle={{width:'100%',backgroundColor:Config.secondaryColor,borderRadius:20,elevation:5}}/>
+                                    <Button onPress={()=>{this.sendData()}} title={lan.Send} buttonStyle={{width:'100%',backgroundColor:Config.secondaryColor,borderRadius:20,elevation:5}}/>
                                 </View>
                                 <View style={{width:'40%',paddingLeft:5,paddingRight:15,paddingTop:10}}>
-                                    <Button title={Lng.Attach} onPress={()=>{this.attachFile()}} buttonStyle={{width:'100%',backgroundColor:'orange',borderRadius:20,elevation:5}}/>
+                                    <Button title={lan.Attach} onPress={()=>{this.attachFile()}} buttonStyle={{width:'100%',backgroundColor:'orange',borderRadius:20,elevation:5}}/>
                                 </View>
                             </View>
                         </View>
@@ -358,7 +362,7 @@ export default class TicketList extends React.Component{
                             </View>
                             <View style={{width:'20%',justifyContent:'center'}}>
                             <TouchableOpacity onPress={()=>{this.sendSupportReply()}}>
-                                <Text style={{color:'grey',textAlign:'center'}}>{Lng.Send}</Text>
+                                <Text style={{color:'grey',textAlign:'center'}}>{lan.Send}</Text>
                             </TouchableOpacity>
                             </View>
                         </View>

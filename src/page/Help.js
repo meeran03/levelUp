@@ -41,6 +41,7 @@ export default class Help extends React.Component{
     }
 
     render(){
+        console.log(I18nManager.isRTL)
         return(
             <Onboarding
                 pages={this.state.pages}

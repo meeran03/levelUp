@@ -133,7 +133,7 @@ export default class Profile extends React.Component{
                     <Header
                         containerStyle={{height:60}}
                         backgroundColor={Config.primaryColor}
-                        leftComponent={<Icon name='ios-arrow-back' color='#fff' type='ionicon' onPress={()=>{this.props.navigation.goBack();}} />}
+                        leftComponent={<Icon name='back' color='#fff' type='entypo' onPress={()=>{this.props.navigation.goBack();}} />}
                         leftContainerStyle={{bottom:14,left:14}}
                         centerComponent={{text:lan.profile,numberOfLines:1,style:{color:'#fff',fontFamily:'robotobold'}}}
                         centerContainerStyle={{bottom:13}}

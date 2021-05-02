@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Splash from './src/page/Splash';
 import Route from './src/page/Route';
-import {View} from 'react-native';
+import {View, I18nManager} from 'react-native';
 import FlashMessage from 'react-native-flash-message';
 import Help from './src/page/Help';
 import Profile from './src/page/User/Profile';

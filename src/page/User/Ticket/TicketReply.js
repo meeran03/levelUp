@@ -1,11 +1,11 @@
 import React from 'react';
-import {ActivityIndicator, BackHandler, FlatList, Linking, Modal, View} from 'react-native';
+import {ActivityIndicator, BackHandler, FlatList,I18nManager, Linking, Modal, View} from 'react-native';
 import {Config} from '../../../Config';
 import {Button, Card, Header, Icon, Input, Text} from 'react-native-elements';
 import {getMessages, userData} from '../../../Functions';
 import DocumentPicker from 'react-native-document-picker';
 import FlashMessage from 'react-native-flash-message';
-import {Lng} from '../../../Language';
+import {Lng,Lng2} from '../../../Language';
 
 export default class TicketReply extends React.Component{
 
@@ -17,6 +17,8 @@ export default class TicketReply extends React.Component{
         token    : null,
         data     : null
     }
+
+    lan = I18nManager.isRTL ? Lng : Lng2
 
     async componentDidMount(): void {
         BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
@@ -105,13 +107,14 @@ export default class TicketReply extends React.Component{
     }
 
     render(){
+        let lan = I18nManager.isRTL ? Lng : Lng2
         return(
             this.state.data != null?
                 <View style={{flex:1, backgroundColor:Config.background}}>
                 <Header
                     containerStyle={{height:60,paddingLeft:15,paddingRight:15}}
                     backgroundColor={Config.primaryColor}
-                    leftComponent={<Icon name='ios-arrow-back' color='#fff' type='ionicon' onPress={()=>{this.props.navigation.goBack();}} />}
+                    leftComponent={<Icon name='back' color='#fff' type='entypo' onPress={()=>{this.props.navigation.goBack();}} />}
                     leftContainerStyle={{bottom:14,left:6}}
                     centerComponent={{text:this.props.route.params.title,numberOfLines:1,style:{color:'#fff',fontFamily:'robotobold'}}}
                     centerContainerStyle={{bottom:13}}
@@ -132,7 +135,7 @@ export default class TicketReply extends React.Component{
                         <Button onPress={()=>{this.setState({reply:true})}} title={'Reply'} buttonStyle={{width:'100%',backgroundColor:Config.secondaryColor,borderRadius:20,elevation:5}}/>
                     </View>
                     <View style={{width:'40%',paddingLeft:5,paddingRight:15,paddingTop:10}}>
-                        <Button title={Lng.close} buttonStyle={{width:'100%',backgroundColor:'#FF4B4B',borderRadius:20,elevation:5}} onPress={()=>{this.closeTicket(this.props.route.params.id)}}/>
+                        <Button title={lan.close} buttonStyle={{width:'100%',backgroundColor:'#FF4B4B',borderRadius:20,elevation:5}} onPress={()=>{this.closeTicket(this.props.route.params.id)}}/>
                     </View>
                 </View>
                 <Modal onRequestClose={()=>{this.setState({reply:false})}} visible={this.state.reply}>
@@ -140,12 +143,12 @@ export default class TicketReply extends React.Component{
                         <Header
                             containerStyle={{height:60,paddingLeft:15,paddingRight:15}}
                             backgroundColor={Config.primaryColor}
-                            leftComponent={<Icon name='ios-arrow-back' color='#fff' type='ionicon' onPress={()=>{this.setState({reply:false});}} />}
+                            leftComponent={<Icon name='back' color='#fff' type='entypo' onPress={()=>{this.setState({reply:false});}} />}
                             leftContainerStyle={{bottom:14,left:6}}
-                            centerComponent={{text:Lng.reply_message,numberOfLines:1,style:{color:'#fff',fontFamily:'robotobold'}}}
+                            centerComponent={{text:lan.reply_message,numberOfLines:1,style:{color:'#fff',fontFamily:'robotobold'}}}
                             centerContainerStyle={{bottom:13}}
                         />
-                        <Input onChangeText={(txt)=>{this.setState({replyTxt:txt})}} multiline={true} scrollEnabled={true} containerStyle={{height:'100%',width:'100%',borderWidth:0,flex:1}} inputContainerStyle={{borderBottomWidth:0}} placeholder={Lng.write_message}/>
+                        <Input onChangeText={(txt)=>{this.setState({replyTxt:txt})}} multiline={true} scrollEnabled={true} containerStyle={{height:'100%',width:'100%',borderWidth:0,flex:1}} inputContainerStyle={{borderBottomWidth:0}} placeholder={lan.write_message}/>
                         {(this.state.replyFile != null && this.state.replyFile.name != undefined)?
                             <View style={{elevation:4,flex:1, flexDirection:'row',position:'absolute',width:'100%',height:40,bottom:60,left:0,backgroundColor:'orange'}}>
                                 <View style={{width:'80%',paddingLeft:15,paddingRight:5,paddingTop:10}}>
@@ -158,10 +161,10 @@ export default class TicketReply extends React.Component{
                         :null}
                         <View style={{elevation:4,flex:1, flexDirection:'row',position:'absolute',width:'100%',height:60,bottom:0,left:0,backgroundColor:'#fff'}}>
                             <View style={{width:'60%',paddingLeft:15,paddingRight:5,paddingTop:10}}>
-                                <Button onPress={()=>{this.sendReply()}} title={Lng.Send} buttonStyle={{width:'100%',backgroundColor:Config.secondaryColor,borderRadius:20,elevation:5}}/>
+                                <Button onPress={()=>{this.sendReply()}} title={lan.Send} buttonStyle={{width:'100%',backgroundColor:Config.secondaryColor,borderRadius:20,elevation:5}}/>
                             </View>
                             <View style={{width:'40%',paddingLeft:5,paddingRight:15,paddingTop:10}}>
-                                <Button title={Lng.Attach} onPress={()=>{this.attachFile()}} buttonStyle={{width:'100%',backgroundColor:'orange',borderRadius:20,elevation:5}}/>
+                                <Button title={lan.Attach} onPress={()=>{this.attachFile()}} buttonStyle={{width:'100%',backgroundColor:'orange',borderRadius:20,elevation:5}}/>
                             </View>
                         </View>
                     </View>

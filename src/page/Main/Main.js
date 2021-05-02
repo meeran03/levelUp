@@ -53,9 +53,9 @@ export default class Main extends React.PureComponent{
                         containerStyle={{height:60}}
                         backgroundColor={Config.customColor}
                         rightComponent={<Icon name='search' color='black' type='feather' onPress={()=>{this.setState({modalSearch:true})}} />}
-                        rightContainerStyle={{bottom:14,right:14}}
+                        rightContainerStyle={{bottom:16,right:14}}
                         leftComponent={<Icon name='menu' color='black' type='feather' onPress={() => this.props.navigation.openDrawer()} />}
-                        leftContainerStyle={{bottom:14,left:14}}
+                        leftContainerStyle={{bottom:16,left:14}}
                         centerComponent={
                             <Image source={require('../../../assets/img/logo.jpeg')} style={{resizeMode:"contain",width:100,height:50}} 
                             />
