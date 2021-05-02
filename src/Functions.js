@@ -216,6 +216,7 @@ export async function getCourses() {
     })
 
     content = await content.json();
+    console.log("Content is ",content)
     if(content.status == '1'){
         return content.data;
     }else{
