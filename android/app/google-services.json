@@ -57,6 +57,51 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:710646278015:android:26677950764f784d27dc4a",
+        "android_client_info": {
+          "package_name": "com.meeran.levelup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "710646278015-0nqtsq41hckb2i5sl12di8vdu487ovb5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.meeran.levelup",
+            "certificate_hash": "ebfead4cd09d4bb7253efbd2b5caad95d9556eca"
+          }
+        },
+        {
+          "client_id": "710646278015-79gpcscf0ei9nbhpors87mblc1f60f4n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.meeran.levelup",
+            "certificate_hash": "3f6e90aab0d1d6474aa2028531cf6992fc3efb04"
+          }
+        },
+        {
+          "client_id": "710646278015-1b9g1d8ni2br2okkcadldroa2sble2kr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkLDo9D_oTTu95ffAyaKBL-mb8QWXNOcM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "710646278015-1b9g1d8ni2br2okkcadldroa2sble2kr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

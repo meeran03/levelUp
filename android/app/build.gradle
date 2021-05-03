@@ -132,7 +132,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.levelup"
+        applicationId "com.meeran.levelup"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

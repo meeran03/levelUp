@@ -1,8 +1,8 @@
 platform :ios, '9.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-target 'Levelup' do
-  # Pods for Levelup
+target 'LevelUp' do
+  # Pods for LevelUp
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
@@ -41,7 +41,7 @@ target 'Levelup' do
 
   pod 'react-native-webview', :path => '../node_modules/react-native-webview'
 
-  target 'LevelupTests' do
+  target 'LevelUpTests' do
     inherit! :search_paths
     # Pods for testing
   end
@@ -49,10 +49,10 @@ target 'Levelup' do
   use_native_modules!
 end
 
-target 'Levelup-tvOS' do
-  # Pods for Levelup-tvOS
+target 'LevelUp-tvOS' do
+  # Pods for LevelUp-tvOS
 
-  target 'Levelup-tvOSTests' do
+  target 'LevelUp-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

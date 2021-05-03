@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { View,Image,Text } from 'react-native';
+import { View,Image,Text,ScrollView, I18nManager } from 'react-native';
 import { Header, Icon, Overlay} from 'react-native-elements';
 import {Config} from '../../Config';
-import {Lng} from '../../Language'
+import {Lng, Lng2} from '../../Language'
 
 
 export default function Privacy(props) {
-
+    let lan = I18nManager.isRTL ? Lng : Lng2
     return (
-      <View style={{backgroundColor:'white',flex:1}}>
+      <ScrollView style={{backgroundColor:'white',flex:1}}>
             <Header
                 containerStyle={{height:60}}
                 backgroundColor={Config.customColor}
@@ -21,14 +21,14 @@ export default function Privacy(props) {
                 centerContainerStyle={{bottom:13}}
             />
             
-        <Text  style={{textAlign:"center",paddingVertical:20,fontSize:20}}>Privacy Policy</Text>
+        <Text  style={{textAlign:"center",paddingVertical:20,fontSize:20}}>{lan.Privacy}</Text>
         <Image source={require('../../../assets/img/logo.jpeg')} 
             style={{
                 resizeMode:"contain",width:200,height:200,
                 alignSelf: "center"
             }} />
-        <Text style={{fontWeight:'500',fontSize: 20,textAlign:"left",paddingVertical:20,color:Config.primaryColor,paddingHorizontal:10}}>Privacy Policy</Text>
-        <Text style={{paddingHorizontal:12,textAlign:'justify',fontSize:15}} >{Lng.PrivacyText}</Text>
-      </View>
+        <Text style={{fontWeight:'500',fontSize: 20,textAlign:"left",paddingVertical:20,color:Config.primaryColor,paddingHorizontal:10}}>{lan.Privacy}</Text>
+        <Text style={{paddingHorizontal:12,textAlign:'justify',fontSize:15}} >{lan.PrivacyText}</Text>
+      </ScrollView>
     );
 }

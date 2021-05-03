@@ -1,5 +1,5 @@
 const Config = {
-    url                 :'http://arsoftlogix.com',
+    url                 :'https://ilevelup.net',
     secret              :'esting$arsoftlogix.com',
     version             :'1',
     color               :'#000',

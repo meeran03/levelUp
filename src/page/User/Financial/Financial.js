@@ -194,6 +194,7 @@ export default class Financial extends React.Component{
     }
 
     _walletPay = () => {
+        let lan = I18nManager.isRTL ? Lng : Lng2;
         if(this.state.payPrice == 0 || this.state.payPrice == ''){
             showMessage({
                 message : lan.empty_field,
@@ -206,15 +207,16 @@ export default class Financial extends React.Component{
     }
 
     render(){
+        let lan = I18nManager.isRTL ? Lng : Lng2;
         return(
             this.state.data != null?
                 <View style={{flex:1, backgroundColor:Config.background}}>
                     <Header
                         containerStyle={{height:60,paddingLeft:15,paddingRight:15}}
                         backgroundColor={Config.customColor}
-                        leftComponent={<Icon name='back' color='#fff' type='entypo' onPress={()=>{this.props.navigation.goBack();}} />}
+                        leftComponent={<Icon name='back' color='black' type='entypo' onPress={()=>{this.props.navigation.goBack();}} />}
                         leftContainerStyle={{bottom:14,left:4}}
-                        centerComponent={{text:lan.Financial,numberOfLines:1,style:{color:'#fff',fontFamily:'robotobold'}}}
+                        centerComponent={{text:lan.Financial,numberOfLines:1,style:{color:'black',fontFamily:'robotobold'}}}
                         centerContainerStyle={{bottom:14}}
                     />
                     <SegmentedControlTab
