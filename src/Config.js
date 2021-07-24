@@ -9,7 +9,7 @@ const Config = {
     background          :'white',
     backgroundButton    :'#0082FC',
     bottomNamIcon       :'#ffab00',
-    primaryColor        :'#1DA1F2',
+    mainTextColor       :'#1DA1F2',
     customColor         :"white",
     secondaryColor      :'black',
     sectionsColor       :'#2e2e2e',

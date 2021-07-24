@@ -30,6 +30,7 @@ export async function getUserData(token) {
         })
     });
     content = await content.json();
+    console.log("The user data is ",content)
     if(content.status == '1') {
         AsyncStorage.setItem('user',content.data.user);
     }else{
@@ -63,6 +64,7 @@ export async function getData() {
                 Secret  : Config.secret,
             })
         });
+        console.log("Data is ",content.json())
     }
 
     content = await content.json();

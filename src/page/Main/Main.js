@@ -77,7 +77,7 @@ export default class Main extends React.PureComponent{
                         <Crasoual navigation={this.props.navigation} data={this.state.data.content.popular} title={lan.most_popular_courses}/>
                         <Crasoual navigation={this.props.navigation} data={this.state.data.content.sell} title={lan.most_viewed_courses}/>
                         <View style={{height:220,marginTop:10}}>
-                            <Slider navigation={this.props.navigation} data={this.state.data.content.slider} ids={this.state.data.content.slider_id}/>
+                            {/* <Slider navigation={this.props.navigation} data={this.state.data.content.slider} ids={this.state.data.content.slider_id}/> */}
                         </View>
                         { this.state.user &&  ( 
                         <Card  style={{marginBottom : 20}} containerStyle={{justifyContent: 'center',alignItems : "center"}}>
